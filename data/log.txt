@@ -1,0 +1,138 @@
+[2026-04-08 17:43:28] 208271638040595@lid: Hello there
+[2026-04-09 10:53:08] status@broadcast: We all have life problems.Some spoken  and some unspoken,but ...............
+
+Just run to God 
+ 📍
+[SYSTEM] 2026-04-09T09:05:39.336Z | Demo database seeded with 5 entries
+[2026-04-09 12:08:00] 208271638040595@lid: Tge
+[2026-04-09 12:11:10] 208271638040595@lid: Heyyyy
+[2026-04-09 12:13:14] 208271638040595@lid: Test 1
+[2026-04-09 12:15:38] 208271638040595@lid: Test message 3
+[REPLY] 2026-04-09T10:18:16.389Z | bee replied to 208271638040595@lid: I am okay
+[REPLY] 2026-04-09T10:18:38.344Z | bee replied to 208271638040595@lid: amana kaaa
+[2026-04-09 12:23:32] 208271638040595@lid: Funny human hi
+[2026-04-09 12:23:56] 208271638040595@lid: > Hi there
+[2026-04-09 12:24:35] 29747161616596@lid: 
+[2026-04-09 12:24:45] 29747161616596@lid: Brandon
+[2026-04-09 12:24:50] 208271638040595@lid: Hi human
+[2026-04-09 12:26:18] 29747161616596@lid:  [media: C:\Users\Brandon T. Bande\Desktop\projects\fung.ai_chatbot\data\files\ACE46AFDD843F14C0CCF1C501D3A3758_1775730378431.webp]
+[2026-04-09 12:28:53] 208271638040595@lid: Hello there
+[2026-04-09 12:29:14] 208271638040595@lid: (media only) [media: C:\Users\Brandon T. Bande\Desktop\projects\fung.ai_chatbot\data\files\A5F9CB406ED9A2ADA488DAEBB9F88666_1775730554079.webp]
+[REPLY] 2026-04-09T10:30:07.917Z | bee replied to 208271638040595@lid: ok
+[REPLY] 2026-04-09T10:30:53.701Z | bee replied to 29747161616596@lid: Reply from the UI
+[2026-04-09 12:32:18] 208271638040595@lid: Nice one
+[REPLY] 2026-04-09T10:37:59.217Z | bee replied to 208271638040595@lid: Test
+[SYSTEM] 2026-04-09T10:39:17.259Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:39:21.471Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T10:41:14.925Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:41:18.515Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T10:43:27.961Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:43:31.447Z | WhatsApp client is READY
+[REPLY] 2026-04-09T10:44:21.484Z | bee replied to 29747161616596@lid: Test
+[SYSTEM] 2026-04-09T10:46:05.765Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:16.844Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:21.472Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:23.356Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:26.133Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:29.651Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T10:46:30.089Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:31.672Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:38.191Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:46:42.151Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T10:49:04.584Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:49:08.214Z | WhatsApp client is READY
+[REPLY] 2026-04-09T10:50:09.637Z | bee replied to 208271638040595@lid: hey
+[2026-04-09 12:50:55] 208271638040595@lid: Testing the new reply
+[REPLY] 2026-04-09T10:51:12.651Z | bee replied to 208271638040595@lid: okay
+[SYSTEM] 2026-04-09T10:54:36.716Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T10:54:41.302Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T13:20:16.528Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:20:20.331Z | WhatsApp client is READY
+[2026-04-09 15:20:28] 208271638040595@lid: Hey there
+[REPLY] 2026-04-09T13:20:46.939Z | bee replied to 208271638040595@lid: chiii
+[SYSTEM] 2026-04-09T13:27:05.951Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:27:09.607Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T13:27:29.927Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:27:33.741Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T13:30:33.324Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:30:37.988Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T13:37:42.975Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:37:46.477Z | WhatsApp client is READY
+[2026-04-09 15:39:50] 208271638040595@lid: Test
+[SYSTEM] 2026-04-09T13:47:07.910Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:47:15.097Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T13:47:50.733Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-09T13:47:50.808Z | Fatal error during initialize: The browser is already running for C:\Users\Brandon T. Bande\Desktop\projects\fung.ai_chatbot\data\wwebjs_auth\session. Use a different `userDataDir` or stop the running browser first.
+[SYSTEM] 2026-04-09T13:51:46.033Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:51:49.696Z | WhatsApp client is READY
+[2026-04-09 15:52:10] 208271638040595@lid: New test
+[REPLY] 2026-04-09T13:52:33.478Z | bee replied to 208271638040595@lid: apaa
+[WHATSAPP SENT] 2026-04-09T13:52:33.478Z | Message delivered to 208271638040595@lid
+[2026-04-09 15:53:50] IGNORED empty message from 12794825043992@lid
+[2026-04-09 15:53:54] 12794825043992@lid: Xhcibucinp
+[REPLY] 2026-04-09T13:54:10.572Z | bee replied to 12794825043992@lid: bharanzi
+[WHATSAPP SENT] 2026-04-09T13:54:10.572Z | Message delivered to 12794825043992@lid
+[REPLY] 2026-04-09T13:54:44.458Z | bee replied to 208271638040595@lid: test 2
+[WHATSAPP SENT] 2026-04-09T13:54:44.458Z | Message delivered to 208271638040595@lid
+[SYSTEM] 2026-04-09T13:58:45.843Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T13:58:49.729Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T14:01:41.139Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T14:01:44.851Z | WhatsApp client is READY
+[2026-04-09 16:04:09] 208271638040595@lid: Last test
+[REPLY] 2026-04-09T14:04:35.914Z | bee replied to 208271638040595@lid: its working bhururu
+[WHATSAPP SENT] 2026-04-09T14:04:35.914Z | Message delivered to 208271638040595@lid
+[2026-04-09 16:04:57] 208271638040595@lid: Test 3
+[REPLY] 2026-04-09T14:06:20.126Z | admin replied to 208271638040595@lid: Takapedza masports
+[WHATSAPP SENT] 2026-04-09T14:06:20.126Z | Message delivered to 208271638040595@lid
+[2026-04-09 16:07:33] 208271638040595@lid: Fine boy
+[SYSTEM] 2026-04-09T14:09:52.754Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T14:09:56.500Z | WhatsApp client is READY
+[REPLY] 2026-04-09T14:10:25.863Z | admin replied to 208271638040595@lid: Done aaaaah
+[WHATSAPP SENT] 2026-04-09T14:10:25.863Z | Message delivered to 208271638040595@lid
+[2026-04-09 16:11:27] 208271638040595@lid: Last test
+[REPLY] 2026-04-09T14:11:53.122Z | admin replied to 208271638040595@lid: working
+[WHATSAPP SENT] 2026-04-09T14:11:53.122Z | Message delivered to 208271638040595@lid
+[2026-04-09 16:12:45] 208271638040595@lid: Mmm user test
+[REPLY] 2026-04-09T14:15:09.548Z | user replied to 208271638040595@lid: updated
+[WHATSAPP SENT] 2026-04-09T14:15:09.548Z | Message delivered to 208271638040595@lid
+[SYSTEM] 2026-04-09T14:18:19.824Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T14:18:23.500Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T14:18:33.918Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T14:18:37.798Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T14:18:40.572Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:18:58.928Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:19:10.578Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:19:40.574Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:19:58.918Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:10.570Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:22.149Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:24.731Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:26.465Z | READ: Fetch users list
+[AUTH] 2026-04-09T14:20:31.678Z | User logged out: user
+[SYSTEM] 2026-04-09T14:20:39.051Z | READ: Login attempt for user: admin
+[AUTH] 2026-04-09T14:20:39.052Z | User logged in: admin (superadmin)
+[SYSTEM] 2026-04-09T14:20:39.561Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:40.578Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:45.676Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:47.195Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:20:48.635Z | READ: Fetch users list
+[SYSTEM] 2026-04-09T14:21:10.567Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:21:40.575Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:22:10.578Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:22:36.806Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-09T14:22:40.529Z | WhatsApp client is READY
+[SYSTEM] 2026-04-09T14:22:40.565Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:23:10.572Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:23:40.564Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:24:10.573Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:24:40.578Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:25:10.572Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:25:40.568Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:26:10.029Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:26:10.575Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:26:40.030Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:26:40.578Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:27:08.477Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:27:10.571Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-09T14:27:20.435Z | READ: Fetch users list
+[SYSTEM] 2026-04-09T14:27:40.572Z | READ: Fetch messages via /data/database.json

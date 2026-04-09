@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fung.ai Helpdesk — Admin Dashboard</title>
+<meta name="description" content="Fung.ai WhatsApp Helpdesk Admin Dashboard — view, manage and reply to support messages in real time." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:      #0a0d14;
+    --bg2:     #0f1420;
+    --bg3:     #151c2e;
+    --bg4:     #1a2236;
+    --border:  #1f2d4a;
+    --accent:  #25d366;
+    --accent2: #128c7e;
+    --blue:    #3b82f6;
+    --purple:  #8b5cf6;
+    --orange:  #f59e0b;
+    --red:     #ef4444;
+    --txt:     #e2e8f0;
+    --txt2:    #94a3b8;
+    --txt3:    #64748b;
+    --radius:  12px;
+    --shadow:  0 8px 32px rgba(0,0,0,.45);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+  /* ─── LOGIN OVERLAY ─── */
+  #loginOverlay{
+    position:fixed;inset:0;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    z-index:1000;transition:opacity .4s;
+  }
+  #loginOverlay.hidden{opacity:0;pointer-events:none}
+  .login-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:20px;padding:48px 40px;width:400px;
+    box-shadow:var(--shadow);text-align:center;
+  }
+  .login-logo{
+    width:64px;height:64px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;margin:0 auto 20px;box-shadow:0 0 24px rgba(37,211,102,.35);
+  }
+  .login-card h1{font-size:22px;font-weight:700;margin-bottom:6px}
+  .login-card p{color:var(--txt2);font-size:13px;margin-bottom:28px}
+
+  .login-field{position:relative;margin-bottom:14px;text-align:left}
+  .login-field label{display:block;font-size:11px;font-weight:600;color:var(--txt2);
+    letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+  .login-field input{
+    width:100%;padding:12px 16px;border-radius:var(--radius);
+    background:var(--bg3);border:1px solid var(--border);
+    color:var(--txt);font-size:14px;font-family:inherit;
+    outline:none;transition:border-color .2s;
+  }
+  .login-field input:focus{border-color:var(--accent)}
+
+  .btn-primary{
+    width:100%;padding:13px;border-radius:var(--radius);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none;color:#fff;font-size:14px;font-weight:600;
+    cursor:pointer;transition:opacity .2s,transform .1s;font-family:inherit;
+    margin-top:6px;
+  }
+  .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+  .btn-primary:active{transform:translateY(0)}
+  #loginStatus{color:var(--txt2);font-size:12px;margin-top:12px;min-height:18px}
+
+  /* ─── LAYOUT ─── */
+  #app{display:none;flex-direction:column;height:100vh}
+  #app.visible{display:flex}
+
+  /* ─── TOP BAR ─── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;height:62px;background:var(--bg2);
+    border-bottom:1px solid var(--border);flex-shrink:0;
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar-left{display:flex;align-items:center;gap:14px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand-icon{
+    width:36px;height:36px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;font-size:18px;
+  }
+  .brand-name{font-size:16px;font-weight:700;letter-spacing:-.3px}
+  .brand-sub{font-size:11px;color:var(--txt2);font-weight:400}
+
+  /* WhatsApp status pill */
+  #waBadge{
+    display:flex;align-items:center;gap:6px;
+    padding:5px 12px;border-radius:999px;
+    font-size:12px;font-weight:500;
+    background:var(--bg3);border:1px solid var(--border);
+    transition:all .3s;
+  }
+  #waIndicator{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--red);transition:background .4s;
+  }
+  #waBadge.online #waIndicator{background:var(--accent);box-shadow:0 0 8px rgba(37,211,102,.6)}
+  #waBadge.online{border-color:rgba(37,211,102,.3)}
+
+  .topbar-right{display:flex;align-items:center;gap:14px}
+  .admin-pill{
+    display:flex;align-items:center;gap:8px;
+    padding:6px 14px;border-radius:999px;
+    background:var(--bg3);border:1px solid var(--border);font-size:13px;
+  }
+  .admin-avatar{
+    width:26px;height:26px;border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--blue));
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:700;
+  }
+  .admin-role-badge{
+    font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px;
+    background:rgba(139,92,246,.2);color:var(--purple);border:1px solid rgba(139,92,246,.35);
+  }
+  .btn-logout{
+    padding:6px 14px;border-radius:var(--radius);
+    background:transparent;border:1px solid var(--border);
+    color:var(--txt2);font-size:12px;cursor:pointer;font-family:inherit;
+    transition:all .2s;
+  }
+  .btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+  /* ─── MAIN AREA ─── */
+  .main{display:flex;flex:1;overflow:hidden}
+
+  /* ─── SIDEBAR ─── */
+  .sidebar{
+    width:210px;background:var(--bg2);border-right:1px solid var(--border);
+    padding:20px 12px;display:flex;flex-direction:column;gap:4px;flex-shrink:0;
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;border-radius:var(--radius);
+    font-size:13px;font-weight:500;color:var(--txt2);
+    cursor:pointer;transition:all .2s;border:1px solid transparent;
+  }
+  .nav-item:hover{background:var(--bg3);color:var(--txt)}
+  .nav-item.active{
+    background:linear-gradient(135deg,rgba(37,211,102,.15),rgba(18,140,126,.08));
+    border-color:rgba(37,211,102,.25);color:var(--accent);
+  }
+  .nav-icon{font-size:16px;width:20px;text-align:center}
+  .nav-badge{
+    margin-left:auto;background:var(--red);color:#fff;
+    font-size:10px;font-weight:700;padding:1px 6px;border-radius:999px;
+  }
+  .sidebar-divider{height:1px;background:var(--border);margin:8px 6px}
+
+  /* ─── CONTENT AREA ─── */
+  .content{flex:1;overflow-y:auto;padding:28px}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* ─── SECTION HEADER ─── */
+  .section-header{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:22px;
+  }
+  .section-title{font-size:20px;font-weight:700}
+  .section-sub{font-size:12px;color:var(--txt2);font-weight:400;margin-left:8px}
+
+  /* ─── FILTER BAR ─── */
+  .filter-bar{
+    display:flex;align-items:center;gap:10px;
+    flex-wrap:wrap;margin-bottom:20px;
+  }
+  .filter-btn{
+    padding:7px 16px;border-radius:999px;font-size:12px;font-weight:500;
+    background:var(--bg3);border:1px solid var(--border);
+    color:var(--txt2);cursor:pointer;transition:all .2s;font-family:inherit;
+  }
+  .filter-btn:hover,.filter-btn.active{
+    background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.35);color:var(--accent);
+  }
+  .filter-input{
+    padding:7px 14px;border-radius:999px;font-size:12px;
+    background:var(--bg3);border:1px solid var(--border);
+    color:var(--txt);font-family:inherit;outline:none;
+    transition:border-color .2s;
+  }
+  .filter-input:focus{border-color:var(--accent)}
+
+  /* ─── MESSAGE CARDS ─── */
+  #messageList{display:flex;flex-direction:column;gap:14px}
+  .msg-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+    transition:border-color .25s,box-shadow .25s;
+  }
+  .msg-card:hover{border-color:rgba(37,211,102,.25);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+  .msg-card.resolved{border-left:3px solid var(--accent)}
+  .msg-card.unread{border-left:3px solid var(--orange)}
+
+  .msg-header{
+    display:flex;align-items:center;gap:14px;
+    padding:16px 20px 12px;
+  }
+  .msg-avatar{
+    width:40px;height:40px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(135deg,var(--blue),var(--purple));
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:700;
+  }
+  .msg-meta{flex:1;min-width:0}
+  .msg-sender{font-size:14px;font-weight:600;margin-bottom:2px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .msg-time{font-size:11px;color:var(--txt3)}
+  .msg-status{
+    padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;
+    white-space:nowrap;
+  }
+  .status-unread{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3)}
+  .status-replied{background:rgba(37,211,102,.12);color:var(--accent);border:1px solid rgba(37,211,102,.3)}
+
+  .msg-body{padding:0 20px 14px}
+  .msg-text{
+    background:var(--bg3);border-radius:10px;padding:12px 14px;
+    font-size:13px;line-height:1.6;color:var(--txt);
+    border-left:2px solid var(--border);
+  }
+  .msg-media{margin-top:8px}
+  .msg-media a{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--blue);font-size:12px;text-decoration:none;
+    padding:5px 10px;border-radius:8px;background:rgba(59,130,246,.1);
+    border:1px solid rgba(59,130,246,.25);transition:all .2s;
+  }
+  .msg-media a:hover{background:rgba(59,130,246,.2)}
+
+  /* previous reply display */
+  .msg-reply-display{
+    margin:8px 20px 0;padding:10px 14px;
+    background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.2);
+    border-radius:10px;font-size:12px;color:var(--txt2);
+  }
+  .msg-reply-display span{color:var(--accent);font-weight:600}
+
+  /* reply form */
+  .msg-reply-form{
+    padding:12px 20px 16px;border-top:1px solid var(--border);display:none;
+  }
+  .msg-card.unread .msg-reply-form{display:block}
+  .reply-row{display:flex;gap:10px;align-items:flex-end}
+  .reply-inputs{flex:1;display:flex;flex-direction:column;gap:8px}
+  .reply-inputs textarea{
+    width:100%;padding:10px 14px;border-radius:var(--radius);
+    background:var(--bg4);border:1px solid var(--border);
+    color:var(--txt);font-size:13px;font-family:'Inter',sans-serif;
+    resize:vertical;min-height:72px;outline:none;
+    transition:border-color .2s;line-height:1.5;
+  }
+  .reply-inputs textarea:focus{border-color:var(--accent)}
+  .reply-inputs input[type=text]{
+    padding:8px 14px;border-radius:var(--radius);
+    background:var(--bg4);border:1px solid var(--border);
+    color:var(--txt);font-size:12px;font-family:'Inter',sans-serif;
+    outline:none;transition:border-color .2s;
+  }
+  .reply-inputs input:focus{border-color:var(--accent)}
+  .dept-select{
+    width:100%;padding:8px 14px;border-radius:var(--radius);
+    background:var(--bg4);border:1px solid var(--border);
+    color:var(--txt);font-size:12px;font-family:'Inter',sans-serif;
+    outline:none;transition:border-color .2s;cursor:pointer;
+    appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 12px center;
+    padding-right:32px;
+  }
+  .dept-select:focus{border-color:var(--accent)}
+  .dept-select option{background:var(--bg3);color:var(--txt)}
+  .dept-custom{
+    display:none;width:100%;margin-top:6px;
+    padding:8px 14px;border-radius:var(--radius);
+    background:var(--bg4);border:1px solid var(--accent);
+    color:var(--txt);font-size:12px;font-family:'Inter',sans-serif;
+    outline:none;transition:border-color .2s;
+  }
+  .dept-custom.show{display:block}
+  .dept-custom:focus{border-color:var(--purple)}
+  .btn-send{
+    padding:10px 20px;border-radius:var(--radius);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none;color:#fff;font-size:13px;font-weight:600;
+    cursor:pointer;font-family:inherit;
+    transition:opacity .2s,transform .1s;white-space:nowrap;
+    display:flex;align-items:center;gap:6px;min-width:110px;justify-content:center;
+  }
+  .btn-send:hover{opacity:.88;transform:translateY(-1px)}
+  .btn-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .send-feedback{
+    font-size:11px;margin-top:6px;min-height:16px;
+    display:flex;align-items:center;gap:4px;
+  }
+  .send-feedback.ok{color:var(--accent)}
+  .send-feedback.err{color:var(--red)}
+
+  /* empty state */
+  .empty-state{
+    text-align:center;padding:60px 20px;color:var(--txt2);
+  }
+  .empty-icon{font-size:48px;margin-bottom:14px;opacity:.4}
+
+  /* ─── ANALYTICS ─── */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+  .stat-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:20px;
+    transition:border-color .25s;
+  }
+  .stat-card:hover{border-color:rgba(37,211,102,.25)}
+  .stat-label{font-size:11px;color:var(--txt2);font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+  .stat-value{font-size:32px;font-weight:700;font-variant-numeric:tabular-nums}
+  .stat-green{color:var(--accent)}
+  .stat-blue{color:var(--blue)}
+  .stat-orange{color:var(--orange)}
+  .stat-red{color:var(--red)}
+
+  .dept-table{width:100%;border-collapse:collapse}
+  .dept-table th{
+    text-align:left;font-size:11px;color:var(--txt2);
+    padding:10px 14px;border-bottom:1px solid var(--border);
+    text-transform:uppercase;letter-spacing:.5px;
+  }
+  .dept-table td{
+    padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(31,45,74,.5);
+  }
+  .dept-table tr:last-child td{border-bottom:none}
+  .dept-bar-wrap{height:6px;background:var(--bg3);border-radius:3px;width:120px;display:inline-block;vertical-align:middle}
+  .dept-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:3px;transition:width .6s}
+
+  /* ─── USERS PANEL ─── */
+  .users-table-wrap{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);overflow:hidden;margin-bottom:24px;
+  }
+  .users-table{width:100%;border-collapse:collapse}
+  .users-table th{
+    text-align:left;font-size:11px;color:var(--txt2);
+    padding:12px 18px;border-bottom:1px solid var(--border);
+    text-transform:uppercase;letter-spacing:.5px;background:var(--bg3);
+  }
+  .users-table td{
+    padding:13px 18px;font-size:13px;
+    border-bottom:1px solid rgba(31,45,74,.5);
+    vertical-align:middle;
+  }
+  .users-table tr:last-child td{border-bottom:none}
+  .users-table tr:hover td{background:rgba(255,255,255,.02)}
+  .user-av-sm{
+    width:30px;height:30px;border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--blue));
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:12px;vertical-align:middle;margin-right:10px;
+  }
+  .role-pill{
+    display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;
+    border-radius:999px;letter-spacing:.3px;
+  }
+  .role-superadmin{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.35)}
+  .role-admin{background:rgba(139,92,246,.15);color:var(--purple);border:1px solid rgba(139,92,246,.35)}
+  .btn-delete{
+    padding:5px 12px;border-radius:8px;font-size:11px;font-weight:600;
+    background:transparent;border:1px solid rgba(239,68,68,.35);
+    color:var(--red);cursor:pointer;font-family:inherit;transition:all .2s;
+  }
+  .btn-delete:hover{background:rgba(239,68,68,.12)}
+
+  .add-admin-form{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:22px;
+  }
+  .add-admin-form h3{font-size:14px;font-weight:600;margin-bottom:16px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr auto auto;gap:10px;align-items:end}
+  .form-group label{display:block;font-size:11px;font-weight:600;color:var(--txt2);
+    letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px}
+  .form-group input,.form-group select{
+    width:100%;padding:10px 14px;border-radius:var(--radius);
+    background:var(--bg3);border:1px solid var(--border);
+    color:var(--txt);font-size:13px;font-family:inherit;outline:none;
+    transition:border-color .2s;
+  }
+  .form-group input:focus,.form-group select:focus{border-color:var(--accent)}
+  .form-group select option{background:var(--bg3)}
+  .btn-add{
+    padding:10px 20px;border-radius:var(--radius);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none;color:#fff;font-size:13px;font-weight:600;
+    cursor:pointer;font-family:inherit;transition:opacity .2s;white-space:nowrap;
+  }
+  .btn-add:hover{opacity:.88}
+
+  /* ─── LOGS ─── */
+  #logsOutput{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:20px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;
+    color:var(--txt2);white-space:pre-wrap;max-height:68vh;overflow-y:auto;
+    word-break:break-all;
+  }
+  .log-system{color:#60a5fa}
+  .log-reply{color:var(--accent)}
+  .log-error{color:var(--red)}
+  .log-warn{color:var(--orange)}
+
+  /* ─── TOAST ─── */
+  #toast{
+    position:fixed;bottom:28px;right:28px;
+    padding:12px 20px;border-radius:var(--radius);
+    background:var(--bg3);border:1px solid var(--border);
+    font-size:13px;font-weight:500;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .35s,transform .35s;
+    transform:translateY(8px);z-index:200;
+  }
+  #toast.show{opacity:1;transform:translateY(0)}
+  #toast.toast-ok{border-color:rgba(37,211,102,.4);color:var(--accent)}
+  #toast.toast-err{border-color:rgba(239,68,68,.4);color:var(--red)}
+
+  /* ─── REFRESH BTN ─── */
+  .btn-refresh{
+    display:flex;align-items:center;gap:6px;
+    padding:7px 16px;border-radius:var(--radius);
+    background:var(--bg3);border:1px solid var(--border);
+    color:var(--txt2);font-size:12px;cursor:pointer;font-family:inherit;
+    transition:all .2s;
+  }
+  .btn-refresh:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ─── SECTION CARD ─── */
+  .section-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:22px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="loginOverlay">
+  <div class="login-card">
+    <div class="login-logo">🤖</div>
+    <h1>Fung.ai Helpdesk</h1>
+    <p>Sign in to the WhatsApp Admin Dashboard</p>
+
+    <div class="login-field">
+      <label for="usernameInput">Username</label>
+      <input type="text" id="usernameInput" placeholder="Enter your username…" autocomplete="username" />
+    </div>
+    <div class="login-field">
+      <label for="passwordInput">Password</label>
+      <input type="password" id="passwordInput" placeholder="Enter your password…" autocomplete="current-password" />
+    </div>
+
+    <button class="btn-primary" id="loginBtn" onclick="handleLogin()">Sign In</button>
+    <div id="loginStatus"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ APP ═══════════════ -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand">
+        <div class="brand-icon">🤖</div>
+        <div>
+          <div class="brand-name">Fung.ai Helpdesk</div>
+          <div class="brand-sub">WhatsApp Admin Portal</div>
+        </div>
+      </div>
+      <div id="waBadge">
+        <div id="waIndicator"></div>
+        <span id="waLabel">WhatsApp Offline</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="admin-pill">
+        <div class="admin-avatar" id="topAvatar"></div>
+        <span id="topName"></span>
+        <span class="admin-role-badge" id="topRole"></span>
+      </div>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="nav-item active" id="nav-messages" onclick="switchPanel('messages')">
+        <span class="nav-icon">💬</span> Messages
+        <span class="nav-badge" id="unreadBadge" style="display:none">0</span>
+      </div>
+      <div class="nav-item" id="nav-analytics" onclick="switchPanel('analytics')">
+        <span class="nav-icon">📊</span> Analytics
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="nav-item" id="nav-users" onclick="switchPanel('users')">
+        <span class="nav-icon">👥</span> Users
+      </div>
+      <div class="nav-item" id="nav-logs" onclick="switchPanel('logs')">
+        <span class="nav-icon">📋</span> Logs
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ── MESSAGES ── -->
+      <div class="panel active" id="panel-messages">
+        <div class="section-header">
+          <div>
+            <span class="section-title">💬 Messages</span>
+            <span class="section-sub" id="msgCount"></span>
+          </div>
+          <button class="btn-refresh" onclick="loadMessages()">↻ Refresh</button>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+          <button class="filter-btn" onclick="setFilter('unread',this)">⏳ Unread</button>
+          <button class="filter-btn" onclick="setFilter('replied',this)">✅ Replied</button>
+          <input type="date" id="dateFilter" class="filter-input" onchange="setFilter('date',null)" />
+          <select id="replierFilter" class="filter-input" style="display:none" onchange="setFilter('replier',null)">
+            <option value="">👤 All Repliers</option>
+          </select>
+        </div>
+
+        <div id="messageList"><div class="empty-state"><div class="empty-icon">📭</div><div>Loading messages…</div></div></div>
+      </div>
+
+      <!-- ── ANALYTICS ── -->
+      <div class="panel" id="panel-analytics">
+        <div class="section-header">
+          <span class="section-title">📊 Analytics</span>
+          <button class="btn-refresh" onclick="renderAnalytics()">↻ Refresh</button>
+        </div>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="section-card">
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:16px">Department Breakdown</h3>
+          <table class="dept-table">
+            <thead><tr><th>Department</th><th>Messages</th><th>Volume</th></tr></thead>
+            <tbody id="deptBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── USERS ── -->
+      <div class="panel" id="panel-users">
+        <div class="section-header">
+          <span class="section-title">👥 User Management</span>
+          <button class="btn-refresh" onclick="loadUsers()">↻ Refresh</button>
+        </div>
+
+        <!-- Users table -->
+        <div class="users-table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr><td colspan="4" style="text-align:center;color:var(--txt2);padding:24px">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Add new user form -->
+        <div class="add-admin-form">
+          <h3>➕ Register New Admin</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" id="newUsername" placeholder="e.g. john_doe" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="newPassword" placeholder="Set a password…" autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+              <label>Role</label>
+              <select id="newRole">
+                <option value="admin">Admin</option>
+                <option value="superadmin">Superadmin</option>
+              </select>
+            </div>
+            <button class="btn-add" onclick="addAdmin()">Add User</button>
+          </div>
+          <div class="send-feedback" id="adminFeedback"></div>
+        </div>
+      </div>
+
+      <!-- ── LOGS ── -->
+      <div class="panel" id="panel-logs">
+        <div class="section-header">
+          <span class="section-title">📋 System Logs</span>
+          <button class="btn-refresh" onclick="loadLogs()">↻ Refresh</button>
+        </div>
+        <div id="logsOutput">Loading logs…</div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let currentAdmin = '';
+let currentRole  = '';
+let allMessages  = [];
+let currentFilter = 'all';
+
+const SESSION_KEY = 'fungai_admin_session';
+
+// ═══════════════════════════════════════════
+//  BOOT — restore session from localStorage
+// ═══════════════════════════════════════════
+(function boot() {
+  try {
+    const saved = localStorage.getItem(SESSION_KEY);
+    if (saved) {
+      const { username, role } = JSON.parse(saved);
+      if (username) { launchApp(username, role); return; }
+    }
+  } catch {}
+  // No valid session → show login
+  document.getElementById('loginOverlay').classList.remove('hidden');
+})();
+
+// ═══════════════════════════════════════════
+//  LOGIN
+// ═══════════════════════════════════════════
+async function handleLogin() {
+  const username = document.getElementById('usernameInput').value.trim();
+  const password = document.getElementById('passwordInput').value;
+  const statusEl = document.getElementById('loginStatus');
+
+  if (!username) { statusEl.textContent = '⚠️ Please enter your username.'; return; }
+  if (!password) { statusEl.textContent = '⚠️ Please enter your password.';  return; }
+
+  statusEl.textContent = '⏳ Signing in…';
+  document.getElementById('loginBtn').disabled = true;
+
+  try {
+    const res  = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      // Persist session
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: data.username, role: data.role }));
+      statusEl.textContent = `👋 Welcome back, ${data.username}!`;
+      setTimeout(() => launchApp(data.username, data.role), 500);
+    } else {
+      statusEl.style.color = 'var(--red)';
+      statusEl.textContent = '❌ ' + (data.error || 'Login failed.');
+      document.getElementById('loginBtn').disabled = false;
+    }
+  } catch (e) {
+    statusEl.style.color = 'var(--red)';
+    statusEl.textContent = '⚠️ Server error. Is the bot running?';
+    document.getElementById('loginBtn').disabled = false;
+  }
+}
+
+// Enter key on both fields
+['usernameInput','passwordInput'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+});
+
+function launchApp(name, role) {
+  currentAdmin = name;
+  currentRole  = role || 'admin';
+
+  document.getElementById('loginOverlay').classList.add('hidden');
+  const app = document.getElementById('app');
+  app.classList.add('visible');
+
+  document.getElementById('topName').textContent   = name;
+  document.getElementById('topAvatar').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('topRole').textContent   = currentRole === 'superadmin' ? '★ Superadmin' : 'Admin';
+
+  // Reset login form state
+  document.getElementById('loginStatus').textContent  = '';
+  document.getElementById('loginStatus').style.color  = '';
+  document.getElementById('loginBtn').disabled        = false;
+
+  loadMessages();
+  startStatusPoll();
+}
+
+async function logout() {
+  if (currentAdmin) {
+    try {
+      await fetch('/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: currentAdmin })
+      });
+    } catch (e) {}
+  }
+  
+  localStorage.removeItem(SESSION_KEY);
+  currentAdmin = '';
+  currentRole  = '';
+  allMessages  = [];
+  document.getElementById('loginOverlay').classList.remove('hidden');
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('usernameInput').value = '';
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('loginStatus').textContent = '';
+}
+
+// ════════════════════════════════════════════
+//  PANEL SWITCHING
+// ════════════════════════════════════════════
+function switchPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+
+  if (name === 'analytics') renderAnalytics();
+  if (name === 'users')     loadUsers();
+  if (name === 'logs')      loadLogs();
+}
+
+// ════════════════════════════════════════════
+//  WHATSAPP STATUS POLL
+// ════════════════════════════════════════════
+function startStatusPoll() {
+  checkStatus();
+  setInterval(checkStatus, 10000);
+}
+
+async function checkStatus() {
+  try {
+    const r = await fetch('/whatsapp-status');
+    const d = await r.json();
+    const badge = document.getElementById('waBadge');
+    const label = document.getElementById('waLabel');
+    if (d.ready) {
+      badge.className = 'online'; badge.id = 'waBadge';
+      label.textContent = 'WhatsApp Online';
+    } else {
+      badge.className = ''; badge.id = 'waBadge';
+      label.textContent = 'WhatsApp Offline';
+    }
+  } catch {}
+}
+
+// ════════════════════════════════════════════
+//  MESSAGES
+// ════════════════════════════════════════════
+async function loadMessages() {
+  try {
+    const r = await fetch('/data/database.json?ts=' + Date.now());
+    allMessages = await r.json();
+
+    if (currentRole === 'superadmin') {
+      const repEl = document.getElementById('replierFilter');
+      repEl.style.display = 'inline-block';
+      const oldVal = repEl.value;
+      const repliers = [...new Set(allMessages.filter(m => m.responded_by).map(m => m.responded_by))];
+      repEl.innerHTML = '<option value="">👤 All Repliers</option>' + repliers.map(u => `<option value="${escHtml(u)}">${escHtml(u)}</option>`).join('');
+      repEl.value = oldVal;
+    }
+  } catch {
+    allMessages = [];
+  }
+  renderMessages();
+  updateUnreadBadge();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderMessages();
+}
+
+function renderMessages() {
+  const list = document.getElementById('messageList');
+  const dateVal = document.getElementById('dateFilter').value;
+  const repVal  = document.getElementById('replierFilter').value;
+
+  let msgs = [...allMessages].reverse(); // newest first
+
+  if (currentFilter === 'unread')  msgs = msgs.filter(m => !m.resolved);
+  if (currentFilter === 'replied') msgs = msgs.filter(m => m.resolved);
+  if (currentFilter === 'date' && dateVal) msgs = msgs.filter(m => m.date === dateVal);
+  if (currentFilter === 'replier' && repVal) msgs = msgs.filter(m => m.responded_by === repVal);
+
+  document.getElementById('msgCount').textContent = `(${msgs.length} shown)`;
+
+  if (!msgs.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div>No messages found</div></div>`;
+    return;
+  }
+
+  list.innerHTML = msgs.map(m => buildCard(m)).join('');
+}
+
+function buildCard(m) {
+  const resolved   = m.resolved;
+  const initials   = (m.sender || '?').substring(0, 2).toUpperCase();
+  const shortSender = m.sender ? m.sender.split('@')[0] : 'Unknown';
+  const statusHtml  = resolved
+    ? `<span class="msg-status status-replied">✅ Replied</span>`
+    : `<span class="msg-status status-unread">⏳ Unread</span>`;
+
+  const mediaHtml = m.media
+    ? `<div class="msg-media"><a href="${encodeURI(m.media)}" target="_blank">📎 Media Attachment</a></div>`
+    : '';
+
+  let replyDisplay = '';
+  if (resolved && m.response) {
+    if (currentRole === 'superadmin') {
+      replyDisplay = `<div class="msg-reply-display">Replied by <span>${m.responded_by || 'admin'}</span>: ${escHtml(m.response)}</div>`;
+    } else {
+      replyDisplay = `<div class="msg-reply-display">Replied: ${escHtml(m.response)}</div>`;
+    }
+  }
+
+  const deptOptions = buildDeptOptions();
+  const replyForm = !resolved ? `
+    <div class="msg-reply-form">
+      <div class="reply-row">
+        <div class="reply-inputs">
+          <textarea class="reply-textarea" placeholder="Type your reply here…"></textarea>
+          <div>
+            <select class="dept-select" onchange="toggleCustomDept(this)">
+              <option value="">— Select department (optional) —</option>
+              ${deptOptions}
+              <option value="__other__">✏️ Other (type below)…</option>
+            </select>
+            <input type="text" class="dept-custom" placeholder="Enter custom department…" />
+          </div>
+        </div>
+        <button class="btn-send" data-msgid="${escHtml(m.msgId)}" onclick="sendReply(this)">
+          <span>📤</span> Send
+        </button>
+      </div>
+      <div class="send-feedback"></div>
+    </div>` : '';
+
+  return `
+    <div class="msg-card ${resolved ? 'resolved' : 'unread'}" id="card-${m.msgId}">
+      <div class="msg-header">
+        <div class="msg-avatar">${initials}</div>
+        <div class="msg-meta">
+          <div class="msg-sender">📱 ${shortSender}</div>
+          <div class="msg-time">📅 ${m.date} &nbsp;⏰ ${m.time} &nbsp;·&nbsp; ${m.channel}</div>
+        </div>
+        ${statusHtml}
+      </div>
+      <div class="msg-body">
+        <div class="msg-text">${escHtml(m.message || '(no text)')}</div>
+        ${mediaHtml}
+      </div>
+      ${replyDisplay}
+      ${replyForm}
+    </div>`;
+}
+
+async function sendReply(btn) {
+  const msgId    = btn.getAttribute('data-msgid');
+  const form     = btn.closest('.msg-reply-form');
+  const textEl   = form.querySelector('.reply-textarea');
+  const selectEl = form.querySelector('.dept-select');
+  const customEl = form.querySelector('.dept-custom');
+  const fbEl     = form.querySelector('.send-feedback');
+
+  const replyText = textEl ? textEl.value.trim() : '';
+  if (!replyText) { showFeedback(fbEl, '⚠️ Please type a reply before sending.', false); return; }
+
+  // Resolve department: custom text input if "Other" selected, else select value
+  const deptRaw = selectEl ? selectEl.value : '';
+  const dept = deptRaw === '__other__'
+    ? (customEl ? customEl.value.trim() : '')
+    : deptRaw;
+
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> Sending…';
+  showFeedback(fbEl, '', null);
+
+  try {
+    const res = await fetch('/save-response', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        msgId,
+        response: replyText,
+        department: dept,
+        responded_by: currentAdmin
+      })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      const waMsg = data.whatsapp
+        ? '✅ Sent via WhatsApp!'
+        : `✅ Saved (WhatsApp: ${data.whatsappError || 'not sent'})`;
+
+      showToast(waMsg, data.whatsapp);
+      showFeedback(fbEl, waMsg, data.whatsapp);
+
+      const entry = allMessages.find(m => m.msgId === msgId);
+      if (entry) {
+        entry.resolved     = true;
+        entry.response     = replyText;
+        entry.responded_by = currentAdmin;
+        entry.department   = dept;
+      }
+      renderMessages();
+      updateUnreadBadge();
+    } else {
+      showToast('❌ ' + (data.error || 'Failed to save.'), false);
+      showFeedback(fbEl, '❌ ' + (data.error || 'Error'), false);
+      btn.disabled = false;
+      btn.innerHTML = '<span>📤</span> Send';
+    }
+  } catch (e) {
+    showToast('❌ Network error', false);
+    showFeedback(fbEl, '❌ Network error', false);
+    btn.disabled = false;
+    btn.innerHTML = '<span>📤</span> Send';
+  }
+}
+
+function updateUnreadBadge() {
+  const unread = allMessages.filter(m => !m.resolved).length;
+  const badge  = document.getElementById('unreadBadge');
+  badge.textContent  = unread;
+  badge.style.display = unread > 0 ? 'inline-block' : 'none';
+}
+
+// ════════════════════════════════════════════
+//  DEPARTMENT HELPERS
+// ════════════════════════════════════════════
+const PRESET_DEPTS = ['SRC', 'Sports', 'Finance', 'Student Affairs', 'Education'];
+
+function buildDeptOptions() {
+  // Collect extra departments already used in messages (beyond presets)
+  const used = [...new Set(
+    allMessages
+      .map(m => (m.department || '').trim())
+      .filter(d => d && !PRESET_DEPTS.map(p => p.toLowerCase()).includes(d.toLowerCase()))
+  )];
+  const all = [...PRESET_DEPTS, ...used];
+  return all.map(d => `<option value="${escHtml(d)}">${escHtml(d)}</option>`).join('');
+}
+
+function toggleCustomDept(select) {
+  const customEl = select.closest('div').querySelector('.dept-custom');
+  if (!customEl) return;
+  if (select.value === '__other__') {
+    customEl.classList.add('show');
+    customEl.focus();
+  } else {
+    customEl.classList.remove('show');
+    customEl.value = '';
+  }
+}
+
+// ════════════════════════════════════════════
+//  ANALYTICS
+// ════════════════════════════════════════════
+async function renderAnalytics() {
+  try {
+    const r    = await fetch('/data/database.json?ts=' + Date.now());
+    const data = await r.json();
+
+    const total   = data.length;
+    const replied = data.filter(m => m.resolved).length;
+    const unread  = total - replied;
+
+    const deptMap = {};
+    data.forEach(m => {
+      const d = m.department || 'Untagged';
+      deptMap[d] = (deptMap[d] || 0) + 1;
+    });
+    const maxDept = Math.max(...Object.values(deptMap), 1);
+
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat-card"><div class="stat-label">Total Messages</div><div class="stat-value">${total}</div></div>
+      <div class="stat-card"><div class="stat-label">Replied</div><div class="stat-value stat-green">${replied}</div></div>
+      <div class="stat-card"><div class="stat-label">Unread</div><div class="stat-value stat-orange">${unread}</div></div>
+      <div class="stat-card"><div class="stat-label">Resolution Rate</div><div class="stat-value stat-blue">${total ? Math.round(replied/total*100) : 0}%</div></div>
+    `;
+
+    document.getElementById('deptBody').innerHTML = Object.entries(deptMap)
+      .sort((a,b) => b[1] - a[1])
+      .map(([dept, count]) => `
+        <tr>
+          <td>${escHtml(dept)}</td>
+          <td>${count}</td>
+          <td>
+            <span class="dept-bar-wrap">
+              <span class="dept-bar" style="width:${Math.round(count/maxDept*100)}%"></span>
+            </span>
+          </td>
+        </tr>`).join('');
+  } catch {}
+}
+
+// ════════════════════════════════════════════
+//  USERS
+// ════════════════════════════════════════════
+async function loadUsers() {
+  const tbody = document.getElementById('usersTableBody');
+  try {
+    const r     = await fetch('/users?ts=' + Date.now());
+    const users = await r.json();
+
+    if (!users.length) {
+      tbody.innerHTML = '<tr><td colspan="4" class="empty-state" style="padding:24px;text-align:center">No users found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = users.map(u => {
+      const isYou   = u.username === currentAdmin;
+      const roleCls = u.role === 'superadmin' ? 'role-superadmin' : 'role-admin';
+      const created = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—';
+      const canDelete = !isYou; // prevent self-deletion
+
+      return `
+        <tr>
+          <td>
+            <span class="user-av-sm">${u.username.charAt(0).toUpperCase()}</span>
+            ${escHtml(u.username)}
+            ${isYou ? '<span style="font-size:10px;color:var(--accent);margin-left:6px">● You</span>' : ''}
+          </td>
+          <td><span class="role-pill ${roleCls}">${u.role}</span></td>
+          <td style="color:var(--txt2)">${created}</td>
+          <td>
+            ${canDelete
+              ? `<button class="btn-delete" onclick="deleteUser('${escHtml(u.username)}')">Remove</button>`
+              : '<span style="font-size:11px;color:var(--txt3)">—</span>'}
+          </td>
+        </tr>`;
+    }).join('');
+  } catch {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--red);padding:18px">Failed to load users.</td></tr>';
+  }
+}
+
+async function addAdmin() {
+  const username = document.getElementById('newUsername').value.trim();
+  const password = document.getElementById('newPassword').value;
+  const role     = document.getElementById('newRole').value;
+  const fb       = document.getElementById('adminFeedback');
+
+  if (!username) { fb.className='send-feedback err'; fb.textContent='⚠️ Username is required.'; return; }
+  if (!password) { fb.className='send-feedback err'; fb.textContent='⚠️ Password is required.';  return; }
+
+  try {
+    const res  = await fetch('/add-admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, role })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      fb.className = 'send-feedback ok';
+      fb.textContent = `✅ "${username}" added as ${role}.`;
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newPassword').value = '';
+      loadUsers();
+    } else {
+      fb.className = 'send-feedback err';
+      fb.textContent = '❌ ' + (data.error || 'Failed to add user.');
+    }
+  } catch {
+    fb.className = 'send-feedback err';
+    fb.textContent = '❌ Network error.';
+  }
+}
+
+async function deleteUser(username) {
+  if (!confirm(`Remove user "${username}"? This cannot be undone.`)) return;
+  try {
+    const res  = await fetch('/remove-admin', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      showToast(`✅ "${username}" removed.`, true);
+      loadUsers();
+    } else {
+      showToast('❌ ' + (data.error || 'Failed.'), false);
+    }
+  } catch {
+    showToast('❌ Network error.', false);
+  }
+}
+
+// ════════════════════════════════════════════
+//  LOGS
+// ════════════════════════════════════════════
+async function loadLogs() {
+  try {
+    const r   = await fetch('/data/log.txt?ts=' + Date.now());
+    const txt = await r.text();
+    if (!txt.trim()) { document.getElementById('logsOutput').textContent = 'No logs yet.'; return; }
+
+    const lines = txt.split('\n').map(line => {
+      if (line.includes('[SYSTEM]'))      return `<span class="log-system">${escHtml(line)}</span>`;
+      if (line.includes('[REPLY]') || line.includes('[WHATSAPP SENT]')) return `<span class="log-reply">${escHtml(line)}</span>`;
+      if (line.includes('[WHATSAPP ERROR]') || line.includes('Error'))  return `<span class="log-error">${escHtml(line)}</span>`;
+      if (line.includes('IGNORED'))       return `<span class="log-warn">${escHtml(line)}</span>`;
+      return escHtml(line);
+    });
+    const out = document.getElementById('logsOutput');
+    out.innerHTML = lines.join('\n');
+    out.scrollTop = out.scrollHeight;
+  } catch (e) {
+    document.getElementById('logsOutput').textContent = 'Failed to load logs.';
+  }
+}
+
+// ════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showFeedback(el, msg, ok) {
+  if (!el) return;
+  el.className  = 'send-feedback ' + (ok === true ? 'ok' : ok === false ? 'err' : '');
+  el.textContent = msg;
+}
+function showToast(msg, ok) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'show ' + (ok ? 'toast-ok' : 'toast-err');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.className = ''; }, 3500);
+}
+
+// Auto-refresh messages every 30s
+setInterval(() => {
+  if (currentAdmin && document.getElementById('panel-messages').classList.contains('active')) loadMessages();
+}, 30000);
+</script>
+</body>
+</html>

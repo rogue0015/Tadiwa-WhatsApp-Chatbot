@@ -1,0 +1,5 @@
+{
+  "watch": ["index.js", "ui/"],
+  "ignore": ["data/*", "node_modules/*", ".git/*", "*.json"],
+  "ext": "js,html,css"
+}
