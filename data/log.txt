@@ -136,3 +136,56 @@ Just run to God
 [SYSTEM] 2026-04-09T14:27:10.571Z | READ: Fetch messages via /data/database.json
 [SYSTEM] 2026-04-09T14:27:20.435Z | READ: Fetch users list
 [SYSTEM] 2026-04-09T14:27:40.572Z | READ: Fetch messages via /data/database.json
+[SYSTEM] 2026-04-10T06:45:32.058Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:45:32.062Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:46:18.105Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:46:18.422Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:46:22.181Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:46:22.185Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:47:14.324Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:47:14.327Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:49:35.140Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:49:35.143Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:53:44.008Z | WhatsApp connection is set. Connecting...
+[SYSTEM] 2026-04-10T06:53:44.009Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:53:44.011Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:57:44.299Z | WhatsApp connection is set. Connecting...
+[SYSTEM] 2026-04-10T06:57:44.300Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:57:44.302Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T06:59:43.757Z | WhatsApp connection is not set. Initializing new session...
+[SYSTEM] 2026-04-10T06:59:43.758Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T06:59:43.760Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T07:00:39.177Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T07:00:39.180Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T07:01:14.249Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T07:01:14.252Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.

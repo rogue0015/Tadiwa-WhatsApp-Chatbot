@@ -184,7 +184,8 @@ const client = new Client({
 
 client.on('ready', () => {
     clientReady = true;
-    console.log('ZOU WhatsApp Bot is ready!');
+    console.log('\n✅ Existing WhatsApp session connected successfully!');
+    console.log('ZOU WhatsApp Bot is ready!\n');
     logMessage(`[SYSTEM] ${new Date().toISOString()} | WhatsApp client is READY`);
 });
 
@@ -201,6 +202,8 @@ client.on('auth_failure', (msg) => {
 });
 
 client.on('qr', (qr) => {
+    console.log("\n⚠️ WhatsApp connection is not set. Initializing chatbot first.");
+    console.log("Please scan the QR code below using your WhatsApp app to connect:\n");
     logMessage(`[SYSTEM] ${new Date().toISOString()} | New QR Code generated.`);
     qrcode.generate(qr, { small: true });
 });
@@ -283,6 +286,7 @@ client.on('message', async (msg) => {
 });
 
 // Start WhatsApp client
+console.log("Initializing WhatsApp client. This may take up to 30 seconds to load...");
 logMessage(`[SYSTEM] ${new Date().toISOString()} | Initializing WhatsApp client...`);
 try {
     client.initialize().catch(err => {
