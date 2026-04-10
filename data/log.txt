@@ -189,3 +189,17 @@ For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides
  1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
  2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
 For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T07:09:44.859Z | Initializing WhatsApp client...
+[SYSTEM ERROR] 2026-04-10T07:09:44.862Z | Fatal error during initialize: Could not find Chrome (ver. 146.0.7680.153). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome`) or
+ 2. your cache path is incorrectly configured (which is: /home/rogue0015/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+[SYSTEM] 2026-04-10T07:22:43.938Z | Initializing WhatsApp client...
+[SYSTEM] 2026-04-10T07:22:52.659Z | New QR Code generated.
+[SYSTEM] 2026-04-10T07:23:30.936Z | WhatsApp client is READY
+[SYSTEM] 2026-04-10T07:23:51.454Z | READ: Read DB to save new WhatsApp message
+[SYSTEM] 2026-04-10T07:23:51.454Z | WRITE: Saved new incoming WhatsApp message from 208555458216060@lid
+[2026-04-10 09:23:51] 208555458216060@lid: Madii
+[SYSTEM] 2026-04-10T07:24:03.612Z | READ: Read DB to save new WhatsApp message
+[SYSTEM] 2026-04-10T07:24:03.612Z | WRITE: Saved new incoming WhatsApp message from 208555458216060@lid
+[2026-04-10 09:24:03] 208555458216060@lid: Oka boss
